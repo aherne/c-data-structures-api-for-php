@@ -1,0 +1,7 @@
+#!/bin/bash
+phpize --clean
+phpize
+./configure
+make
+sudo make install
+sudo php5enmod data_types_api

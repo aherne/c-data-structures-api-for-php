@@ -1,0 +1,18 @@
+src/classes/arraylist.lo: /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/arraylist.cpp
+	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/arraylist.cpp -o src/classes/arraylist.lo 
+src/classes/linkedlist.lo: /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/linkedlist.cpp
+	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/linkedlist.cpp -o src/classes/linkedlist.lo 
+src/classes/doublylinkedlist.lo: /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/doublylinkedlist.cpp
+	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/doublylinkedlist.cpp -o src/classes/doublylinkedlist.lo 
+src/classes/zend_list.lo: /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/zend_list.cpp
+	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/zend_list.cpp -o src/classes/zend_list.lo 
+src/classes/zend_interface.lo: /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/zend_interface.cpp
+	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/zend_interface.cpp -o src/classes/zend_interface.lo 
+data_types_api.lo: /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/data_types_api.cpp
+	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/data_types_api.cpp -o data_types_api.lo 
+$(phplibdir)/data_types_api.la: ./data_types_api.la
+	$(LIBTOOL) --mode=install cp ./data_types_api.la $(phplibdir)
+
+./data_types_api.la: $(shared_objects_data_types_api) $(DATA_TYPES_API_SHARED_DEPENDENCIES)
+	$(LIBTOOL) --mode=link $(CC) $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ -export-dynamic -avoid-version -prefer-pic -module -rpath $(phplibdir) $(EXTRA_LDFLAGS) $(shared_objects_data_types_api) $(DATA_TYPES_API_SHARED_LIBADD)
+
