@@ -17,29 +17,38 @@ PHP_METHOD(ArrayList, __construct){
 
 	// create object
 	list_object* obj = (list_object*) zend_object_store_get_object(getThis() TSRMLS_CC);
-	obj->object = new list_union;
 	obj->type = type;
 	if(type == TYPE_LONG) {
-		obj->object->object_long = new ArrayList<long>;
+		obj->object = new ArrayList<long>;
 	} else if (type == TYPE_DOUBLE) {
-		obj->object->object_double = new ArrayList<double>;
+		obj->object = new ArrayList<double>;
 	} else if (type == TYPE_BOOLEAN) {
-		obj->object->object_boolean = new ArrayList<char>;
+		obj->object = new ArrayList<char>;
 	} else if (type == TYPE_STRING) {
 		obj->memory_manager = new MemoryManager<char*>;
-		obj->object->object_string = new ArrayList<char*>;
+		obj->object = new ArrayList<char*>;
 	} else if(type==TYPE_OBJECT) {
 		obj->class_name = strdup(Z_STRVAL_P(temp));
-		obj->object->object_zval = new ArrayList<zval*>;
+		obj->object = new ArrayList<zval*>;
 	} else {
-		obj->object->object_zval = new ArrayList<zval*>;
+		obj->object = new ArrayList<zval*>;
 	}
 }
 
 PHP_METHOD(ArrayList, __destruct){
 	list_object* obj = (list_object*) zend_object_store_get_object(getThis() TSRMLS_CC);
 	if(obj->object != NULL) {
-		delete obj->object;
+		if(obj->type == TYPE_LONG) {
+			delete ((List<long>*) obj->object);
+		} else if (obj->type == TYPE_DOUBLE) {
+			delete ((List<double>*) obj->object);
+		} else if (obj->type == TYPE_BOOLEAN) {
+			delete ((List<char>*) obj->object);
+		} else if (obj->type == TYPE_STRING) {
+			delete ((List<char*>*) obj->object);
+		} else {
+			delete ((List<zval*>*) obj->object);
+		}
 		obj->object = NULL;
 
 		if(obj->type == TYPE_STRING) {
@@ -62,17 +71,17 @@ PHP_METHOD(ArrayList, addToTop){
     if (obj->object != NULL) {
     	try {
     		if(obj->type == TYPE_LONG) {
-    			obj->object->object_long->addToTop(zval2long(temp));
+    			((List<long>*) obj->object)->addToTop(zval2long(temp));
     		} else if (obj->type == TYPE_DOUBLE) {
-    			obj->object->object_double->addToTop(zval2double(temp));
+    			((List<double>*) obj->object)->addToTop(zval2double(temp));
     		} else if (obj->type == TYPE_BOOLEAN) {
-    			obj->object->object_boolean->addToTop(zval2bool(temp));
+    			((List<char>*) obj->object)->addToTop(zval2bool(temp));
     		} else if (obj->type == TYPE_STRING) {
-    			obj->object->object_string->addToTop(zval2str(temp, obj->memory_manager));
+    			((List<char*>*) obj->object)->addToTop(zval2str(temp, obj->memory_manager));
     		} else if (obj->type == TYPE_OBJECT) {
-    			obj->object->object_zval->addToTop(zval2object(temp, obj->class_name));
+    			((List<zval*>*) obj->object)->addToTop(zval2object(temp, obj->class_name));
     		} else {
-    			obj->object->object_zval->addToTop(temp);
+    			((List<zval*>*) obj->object)->addToTop(temp);
     		}
     	} catch (const std::runtime_error& e) {
     		zend_throw_exception(NULL, e.what(), 0 TSRMLS_CC);
@@ -91,17 +100,17 @@ PHP_METHOD(ArrayList, addToBottom){
     if (obj->object != NULL) {
     	try {
     		if(obj->type == TYPE_LONG) {
-    			obj->object->object_long->addToBottom(zval2long(temp));
+    			((List<long>*) obj->object)->addToBottom(zval2long(temp));
     		} else if (obj->type == TYPE_DOUBLE) {
-    			obj->object->object_double->addToBottom(zval2double(temp));
+    			((List<double>*) obj->object)->addToBottom(zval2double(temp));
     		} else if (obj->type == TYPE_BOOLEAN) {
-    			obj->object->object_boolean->addToBottom(zval2bool(temp));
+    			((List<char>*) obj->object)->addToBottom(zval2bool(temp));
     		} else if (obj->type == TYPE_STRING) {
-    			obj->object->object_string->addToBottom(zval2str(temp, obj->memory_manager));
+    			((List<char*>*) obj->object)->addToBottom(zval2str(temp, obj->memory_manager));
     		} else if (obj->type == TYPE_OBJECT) {
-    			obj->object->object_zval->addToBottom(zval2object(temp, obj->class_name));
+    			((List<zval*>*) obj->object)->addToBottom(zval2object(temp, obj->class_name));
     		} else {
-    			obj->object->object_zval->addToBottom(temp);
+    			((List<zval*>*) obj->object)->addToBottom(temp);
     		}
     	} catch (const std::runtime_error& e) {
     		zend_throw_exception(NULL, e.what(), 0 TSRMLS_CC);
@@ -121,17 +130,17 @@ PHP_METHOD(ArrayList, set){
     if (obj->object != NULL) {
     	try {
     		if(obj->type == TYPE_LONG) {
-    			obj->object->object_long->set(index, zval2long(temp));
+    			((List<long>*) obj->object)->set(index, zval2long(temp));
     		} else if (obj->type == TYPE_DOUBLE) {
-    			obj->object->object_double->set(index, zval2double(temp));
+    			((List<double>*) obj->object)->set(index, zval2double(temp));
     		} else if (obj->type == TYPE_BOOLEAN) {
-    			obj->object->object_boolean->set(index, zval2bool(temp));
+    			((List<char>*) obj->object)->set(index, zval2bool(temp));
     		} else if (obj->type == TYPE_STRING) {
-    			obj->object->object_string->set(index, zval2str(temp, obj->memory_manager));
+    			((List<char*>*) obj->object)->set(index, zval2str(temp, obj->memory_manager));
     		} else if (obj->type == TYPE_OBJECT) {
-    			obj->object->object_zval->set(index, zval2object(temp, obj->class_name));
+    			((List<zval*>*) obj->object)->set(index, zval2object(temp, obj->class_name));
     		} else {
-    			obj->object->object_zval->set(index, temp);
+    			((List<zval*>*) obj->object)->set(index, temp);
     		}
     	} catch (const std::runtime_error& e) {
     		zend_throw_exception(NULL, e.what(), 0 TSRMLS_CC);
@@ -154,17 +163,17 @@ PHP_METHOD(ArrayList, emplace){
     if (obj->object != NULL) {
     	try {
     		if(obj->type == TYPE_LONG) {
-    			obj->object->object_long->emplace(index, zval2long(temp));
+    			((List<long>*) obj->object)->emplace(index, zval2long(temp));
     		} else if (obj->type == TYPE_DOUBLE) {
-    			obj->object->object_double->emplace(index, zval2double(temp));
+    			((List<double>*) obj->object)->emplace(index, zval2double(temp));
     		} else if (obj->type == TYPE_BOOLEAN) {
-    			obj->object->object_boolean->emplace(index, zval2bool(temp));
+    			((List<char>*) obj->object)->emplace(index, zval2bool(temp));
     		} else if (obj->type == TYPE_STRING) {
-    			obj->object->object_string->emplace(index, zval2str(temp, obj->memory_manager));
+    			((List<char*>*) obj->object)->emplace(index, zval2str(temp, obj->memory_manager));
     		} else if (obj->type == TYPE_OBJECT) {
-    			obj->object->object_zval->emplace(index, zval2object(temp, obj->class_name));
+    			((List<zval*>*) obj->object)->emplace(index, zval2object(temp, obj->class_name));
     		} else {
-    			obj->object->object_zval->emplace(index, temp);
+    			((List<zval*>*) obj->object)->emplace(index, temp);
     		}
     	} catch (const std::runtime_error& e) {
     		zend_throw_exception(NULL, e.what(), 0 TSRMLS_CC);
@@ -186,15 +195,15 @@ PHP_METHOD(ArrayList, get){
     if (obj->object != NULL) {
     	try {
     		if(obj->type == TYPE_LONG) {
-    			RETURN_LONG(obj->object->object_long->get(index));
+    			RETURN_LONG(((List<long>*) obj->object)->get(index));
     		} else if (obj->type == TYPE_DOUBLE) {
-    			RETURN_DOUBLE(obj->object->object_double->get(index));
+    			RETURN_DOUBLE(((List<double>*) obj->object)->get(index));
     		} else if (obj->type == TYPE_BOOLEAN) {
-    			RETURN_BOOL(obj->object->object_boolean->get(index));
+    			RETURN_BOOL(((List<char>*) obj->object)->get(index));
     		} else if (obj->type == TYPE_STRING) {
-    			RETURN_STRING(obj->object->object_string->get(index),1);
+    			RETURN_STRING(((List<char*>*) obj->object)->get(index),1);
     		} else {
-    			RETURN_ZVAL(obj->object->object_zval->get(index),1,0);
+    			RETURN_ZVAL(((List<zval*>*) obj->object)->get(index),1,0);
     		}
     	} catch (const std::out_of_range& e) {
     		zend_throw_exception(NULL, e.what(), 0 TSRMLS_CC);
@@ -207,15 +216,15 @@ PHP_METHOD(ArrayList, size) {
 	list_object* obj = (list_object*) zend_object_store_get_object(getThis() TSRMLS_CC);
     if (obj->object != NULL) {
 		if(obj->type == TYPE_LONG) {
-			RETURN_LONG(obj->object->object_long->size());
+			RETURN_LONG(((List<long>*) obj->object)->size());
 		} else if (obj->type == TYPE_DOUBLE) {
-			RETURN_LONG(obj->object->object_double->size());
+			RETURN_LONG(((List<double>*) obj->object)->size());
 		} else if (obj->type == TYPE_BOOLEAN) {
-			RETURN_LONG(obj->object->object_boolean->size());
+			RETURN_LONG(((List<char>*) obj->object)->size());
 		} else if (obj->type == TYPE_STRING) {
-			RETURN_LONG(obj->object->object_string->size());
+			RETURN_LONG(((List<char*>*) obj->object)->size());
 		} else {
-			RETURN_LONG(obj->object->object_zval->size());
+			RETURN_LONG(((List<zval*>*) obj->object)->size());
 		}
     }
 }
@@ -224,15 +233,15 @@ PHP_METHOD(ArrayList, isEmpty) {
 	list_object* obj = (list_object*) zend_object_store_get_object(getThis() TSRMLS_CC);
     if (obj->object != NULL) {
 		if(obj->type == TYPE_LONG) {
-			RETURN_BOOL(obj->object->object_long->isEmpty());
+			RETURN_BOOL(((List<long>*) obj->object)->isEmpty());
 		} else if (obj->type == TYPE_DOUBLE) {
-			RETURN_BOOL(obj->object->object_double->isEmpty());
+			RETURN_BOOL(((List<double>*) obj->object)->isEmpty());
 		} else if (obj->type == TYPE_BOOLEAN) {
-			RETURN_BOOL(obj->object->object_boolean->isEmpty());
+			RETURN_BOOL(((List<char>*) obj->object)->isEmpty());
 		} else if (obj->type == TYPE_STRING) {
-			RETURN_BOOL(obj->object->object_string->isEmpty());
+			RETURN_BOOL(((List<char*>*) obj->object)->isEmpty());
 		} else {
-			RETURN_BOOL(obj->object->object_zval->isEmpty());
+			RETURN_BOOL(((List<zval*>*) obj->object)->isEmpty());
 		}
     }
 }
@@ -246,15 +255,15 @@ PHP_METHOD(ArrayList, containsIndex){
 	list_object* obj = (list_object*) zend_object_store_get_object(getThis() TSRMLS_CC);
     if (obj->object != NULL) {
 		if(obj->type == TYPE_LONG) {
-			RETURN_BOOL(obj->object->object_long->containsIndex(index));
+			RETURN_BOOL(((List<long>*) obj->object)->containsIndex(index));
 		} else if (obj->type == TYPE_DOUBLE) {
-			RETURN_BOOL(obj->object->object_double->containsIndex(index));
+			RETURN_BOOL(((List<double>*) obj->object)->containsIndex(index));
 		} else if (obj->type == TYPE_BOOLEAN) {
-			RETURN_BOOL(obj->object->object_boolean->containsIndex(index));
+			RETURN_BOOL(((List<char>*) obj->object)->containsIndex(index));
 		} else if (obj->type == TYPE_STRING) {
-			RETURN_BOOL(obj->object->object_string->containsIndex(index));
+			RETURN_BOOL(((List<char*>*) obj->object)->containsIndex(index));
 		} else {
-			RETURN_BOOL(obj->object->object_zval->containsIndex(index));
+			RETURN_BOOL(((List<zval*>*) obj->object)->containsIndex(index));
 		}
     }
 }
@@ -269,15 +278,15 @@ PHP_METHOD(ArrayList, removeIndex){
 	if (obj->object != NULL) {
 		try {
     		if(obj->type == TYPE_LONG) {
-    			obj->object->object_long->removeIndex(index);
+    			((List<long>*) obj->object)->removeIndex(index);
     		} else if (obj->type == TYPE_DOUBLE) {
-    			obj->object->object_double->removeIndex(index);
+    			((List<double>*) obj->object)->removeIndex(index);
     		} else if (obj->type == TYPE_BOOLEAN) {
-    			obj->object->object_boolean->removeIndex(index);
+    			((List<char>*) obj->object)->removeIndex(index);
     		} else if (obj->type == TYPE_STRING) {
-    			obj->object->object_string->removeIndex(index);
+    			((List<char*>*) obj->object)->removeIndex(index);
     		} else {
-    			obj->object->object_zval->removeIndex(index);
+    			((List<zval*>*) obj->object)->removeIndex(index);
     		}
 		} catch (const std::out_of_range& e) {
 			zend_throw_exception(NULL, e.what(), 0 TSRMLS_CC);
@@ -296,17 +305,17 @@ PHP_METHOD(ArrayList, containsValue) {
     if (obj->object != NULL) {
     	try {
     		if(obj->type == TYPE_LONG) {
-    			RETURN_BOOL(obj->object->object_long->containsValue(zval2long(temp)));
+    			RETURN_BOOL(((List<long>*) obj->object)->containsValue(zval2long(temp)));
     		} else if (obj->type == TYPE_DOUBLE) {
-    			RETURN_BOOL(obj->object->object_double->containsValue(zval2double(temp)));
+    			RETURN_BOOL(((List<double>*) obj->object)->containsValue(zval2double(temp)));
     		} else if (obj->type == TYPE_BOOLEAN) {
-    			RETURN_BOOL(obj->object->object_boolean->containsValue(zval2bool(temp)));
+    			RETURN_BOOL(((List<char>*) obj->object)->containsValue(zval2bool(temp)));
     		} else if (obj->type == TYPE_STRING) {
-    			RETURN_BOOL(obj->object->object_string->containsValue(zval2str(temp, obj->memory_manager)));
+    			RETURN_BOOL(((List<char*>*) obj->object)->containsValue(zval2str(temp, obj->memory_manager)));
     		} else if (obj->type == TYPE_OBJECT) {
-    			RETURN_BOOL(obj->object->object_zval->containsValue(zval2object(temp, obj->class_name)));
+    			RETURN_BOOL(((List<zval*>*) obj->object)->containsValue(zval2object(temp, obj->class_name)));
     		} else {
-    			RETURN_BOOL(obj->object->object_zval->containsValue(temp));
+    			RETURN_BOOL(((List<zval*>*) obj->object)->containsValue(temp));
     		}
 		} catch (const std::runtime_error& e) {
 			zend_throw_exception(NULL, e.what(), 0 TSRMLS_CC);
@@ -325,17 +334,17 @@ PHP_METHOD(ArrayList, removeValue) {
     if (obj->object != NULL) {
 		try {
     		if(obj->type == TYPE_LONG) {
-    			obj->object->object_long->removeValue(zval2long(temp));
+    			((List<long>*) obj->object)->removeValue(zval2long(temp));
     		} else if (obj->type == TYPE_DOUBLE) {
-    			obj->object->object_double->removeValue(zval2double(temp));
+    			((List<double>*) obj->object)->removeValue(zval2double(temp));
     		} else if (obj->type == TYPE_BOOLEAN) {
-    			obj->object->object_boolean->removeValue(zval2bool(temp));
+    			((List<char>*) obj->object)->removeValue(zval2bool(temp));
     		} else if (obj->type == TYPE_STRING) {
-    			obj->object->object_string->removeValue(zval2str(temp, obj->memory_manager));
+    			((List<char*>*) obj->object)->removeValue(zval2str(temp, obj->memory_manager));
     		} else if (obj->type == TYPE_OBJECT) {
-    			obj->object->object_zval->removeValue(zval2object(temp, obj->class_name));
+    			((List<zval*>*) obj->object)->removeValue(zval2object(temp, obj->class_name));
     		} else {
-    			obj->object->object_zval->removeValue(temp);
+    			((List<zval*>*) obj->object)->removeValue(temp);
     		}
 		} catch (const std::runtime_error& e) {
     		zend_throw_exception(NULL, e.what(), 0 TSRMLS_CC);
@@ -351,15 +360,15 @@ PHP_METHOD(ArrayList, clear) {
 	list_object* obj = (list_object*) zend_object_store_get_object(getThis() TSRMLS_CC);
 	if(obj->object != NULL) {
 		if(obj->type == TYPE_LONG) {
-			obj->object->object_long->clear();
+			((List<long>*) obj->object)->clear();
 		} else if (obj->type == TYPE_DOUBLE) {
-			obj->object->object_double->clear();
+			((List<double>*) obj->object)->clear();
 		} else if (obj->type == TYPE_BOOLEAN) {
-			obj->object->object_boolean->clear();
+			((List<char>*) obj->object)->clear();
 		} else if (obj->type == TYPE_STRING) {
-			obj->object->object_string->clear();
+			((List<char*>*) obj->object)->clear();
 		} else {
-			obj->object->object_zval->clear();
+			((List<zval*>*) obj->object)->clear();
 		}
 	}
 }
@@ -368,30 +377,30 @@ PHP_METHOD(ArrayList, toValue) {
 	list_object* obj = (list_object*) zend_object_store_get_object(getThis() TSRMLS_CC);
     if (obj->object != NULL) {
 		if(obj->type == TYPE_LONG) {
-	    	std::size_t size = obj->object->object_long->size();
-			for (std::size_t i=0; i<size; ++i) {
-				add_next_index_long(return_value,(*obj->object->object_long)[i]);
+			ArrayList<long>* list = (ArrayList<long>*) obj->object;
+	    	for (auto it=list->begin(); it!=list->end(); ++it) {
+				add_next_index_long(return_value,*it);
 			}
 		} else if (obj->type == TYPE_DOUBLE) {
-	    	std::size_t size = obj->object->object_double->size();
-			for (std::size_t i=0; i<size; ++i) {
-				add_next_index_double(return_value,(*obj->object->object_double)[i]);
+			ArrayList<double>* list = (ArrayList<double>*) obj->object;
+	    	for (auto it=list->begin(); it!=list->end(); ++it) {
+				add_next_index_double(return_value,*it);
 			}
 		} else if (obj->type == TYPE_BOOLEAN) {
-	    	std::size_t size = obj->object->object_boolean->size();
-			for (std::size_t i=0; i<size; ++i) {
-				add_next_index_bool(return_value,(*obj->object->object_boolean)[i]);
+			ArrayList<char>* list = (ArrayList<char>*) obj->object;
+	    	for (auto it=list->begin(); it!=list->end(); ++it) {
+				add_next_index_bool(return_value,*it);
 			}
 		} else if (obj->type == TYPE_STRING) {
-	    	std::size_t size = obj->object->object_string->size();
-			for (std::size_t i=0; i<size; ++i) {
-				add_next_index_string(return_value,(*obj->object->object_string)[i],1);
+			ArrayList<char*>* list = (ArrayList<char*>*) obj->object;
+	    	for (auto it=list->begin(); it!=list->end(); ++it) {
+				add_next_index_string(return_value,*it,1);
 			}
 		} else {
-	    	std::size_t size = obj->object->object_zval->size();
-			for (std::size_t i=0; i<size; ++i) {
-				Z_ADDREF_P((*obj->object->object_zval)[i]);
-				add_next_index_zval(return_value,(*obj->object->object_zval)[i]);
+			ArrayList<zval*>* list = (ArrayList<zval*>*) obj->object;
+	    	for (auto it=list->begin(); it!=list->end(); ++it) {
+				Z_ADDREF_P(*it);
+				add_next_index_zval(return_value,*it);
 			}
 		}
     }

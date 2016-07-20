@@ -34,7 +34,17 @@ void ListZendClass::free_object(void *object TSRMLS_DC){
 
 	// free c++ elements
 	if(obj->object != NULL) {
-		delete obj->object;
+		if(obj->type == TYPE_LONG) {
+			delete ((List<long>*) obj->object);
+		} else if (obj->type == TYPE_DOUBLE) {
+			delete ((List<double>*) obj->object);
+		} else if (obj->type == TYPE_BOOLEAN) {
+			delete ((List<char>*) obj->object);
+		} else if (obj->type == TYPE_STRING) {
+			delete ((List<char*>*) obj->object);
+		} else {
+			delete ((List<zval*>*) obj->object);
+		}
 		obj->object = NULL;
 	}
 

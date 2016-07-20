@@ -25,6 +25,33 @@ struct hash<long> {
 };
 
 template<>
+struct hash<char> {
+	std::size_t operator()(const char& item) const {
+		return item;
+	}
+};
+
+template<>
+struct hash<double> {
+	std::size_t operator()(const double& item) const {
+		return item;
+	}
+};
+
+template<>
+struct hash<zval*> {
+	std::size_t operator()(zval*& object) const {
+		zval *retval = NULL;
+		zend_call_method_with_0_params(&object, NULL, NULL, "getHash", &retval);
+		long response;
+		convert_to_long_ex(&retval);
+		response = Z_LVAL_P(retval);
+		zval_ptr_dtor(&retval);
+		return response;
+	}
+};
+
+template<>
 struct hash<char*> {
 	std::size_t operator()(const char* item) const {
 		unsigned long hash = 5381;

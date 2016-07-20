@@ -16,10 +16,14 @@ struct LinkedListEntry {
 	T value;
 	LinkedListEntry* next;
 };
+template<typename T>
+class LinkedListIterator;
 
 template<typename T>
 class LinkedList: public List<T> {
+	friend class LinkedListIterator<T>;
 	public:
+		typedef LinkedListIterator<T> iterator;
 
 		LinkedList() {
 			head = nullptr;
@@ -206,6 +210,14 @@ class LinkedList: public List<T> {
 
 			if(oldCount == count) throw std::out_of_range("Value not found!");
 		}
+
+		iterator begin() {
+			return iterator(this);
+		}
+
+		iterator end(){
+			return iterator(count);
+		}
 	private:
 
 		void deleteHead() {
@@ -269,7 +281,9 @@ class LinkedList: public List<T> {
 
 template<>
 class LinkedList<zval*>: public List<zval*> {
+	friend class LinkedListIterator<zval*>;
 	public:
+		typedef LinkedListIterator<zval*> iterator;
 		LinkedList() {
 			head = nullptr;
 			tail = nullptr;
@@ -462,6 +476,10 @@ class LinkedList<zval*>: public List<zval*> {
 
 			if(oldCount == count) throw std::out_of_range("Value not found!");
 		}
+
+		iterator begin();
+
+		iterator end();
 	private:
 
 		void deleteHead() {
@@ -526,5 +544,58 @@ class LinkedList<zval*>: public List<zval*> {
 		mutable std::size_t currentIndex;
 		mutable LinkedListEntry<zval*>* currentItem;
 };
+
+template<typename T>
+class LinkedListIterator {
+	public:
+		LinkedListIterator(LinkedList<T>* list){
+			this->list = list;
+			current_item = list->head;
+			offset = 0;
+		}
+
+		LinkedListIterator(std::size_t total){
+			list = nullptr;
+			current_item = nullptr;
+			offset = total;
+		}
+
+		~LinkedListIterator(){}
+
+		const T operator*(){
+			return current_item->value;
+		}
+
+		bool operator!=(const LinkedListIterator<T>& it) const {
+			return offset!=it.offset;
+		}
+
+		void remove() {
+			list->removeIndex(offset);
+			current_item = list->currentItem;
+			--offset;
+		}
+
+		LinkedListIterator<T>& operator++(){
+			if(current_item!=nullptr) {
+				current_item = current_item->next;
+			}
+			++offset;
+			return *this;
+		}
+
+	private:
+		LinkedList<T>* list;
+		LinkedListEntry<T>* current_item;
+		std::size_t offset;
+};
+
+inline LinkedListIterator<zval*> LinkedList<zval*>::begin() {
+	return LinkedListIterator<zval*>(this);
+}
+
+inline LinkedListIterator<zval*> LinkedList<zval*>::end() {
+	return LinkedListIterator<zval*>(count);
+}
 
 #endif /* LIST_LINKEDLIST_H_ */

@@ -12,6 +12,9 @@ struct list_object_iterator {
     zend_object_iterator intern;
     list_object* view;
     size_t offset;
+    /**
+     * We need to implement begin() and end() @ List "interface" in order to do iteration without operator[].
+     */
     zval* current;
 };
 

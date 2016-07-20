@@ -123,6 +123,15 @@ public:
 		if(reduce==0) throw std::out_of_range("Value must already exist!");
 		count -= reduce;
 	}
+
+	T* begin() {
+		if(count==0) return nullptr;
+		return &contents[0];
+	}
+
+	T* end() {
+		return &contents[count];
+	}
 private:
 	void resize() {
 		maximum_size = 2*maximum_size;

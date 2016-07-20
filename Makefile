@@ -1,7 +1,7 @@
-srcdir = /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW
-builddir = /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW
-top_srcdir = /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW
-top_builddir = /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW
+srcdir = /home/aherne/git/php-data-structures
+builddir = /home/aherne/git/php-data-structures
+top_srcdir = /home/aherne/git/php-data-structures
+top_builddir = /home/aherne/git/php-data-structures
 EGREP = /bin/grep -E
 SED = /bin/sed
 CONFIGURE_COMMAND = './configure'
@@ -22,7 +22,7 @@ prefix = /usr
 exec_prefix = $(prefix)
 libdir = ${exec_prefix}/lib
 prefix = /usr
-phplibdir = /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/modules
+phplibdir = /home/aherne/git/php-data-structures/modules
 phpincludedir = /usr/include/php5
 CC = cc
 CFLAGS = -g -O2
@@ -177,18 +177,18 @@ distclean: clean
 
 .PHONY: all clean install distclean test
 .NOEXPORT:
-src/classes/arraylist.lo: /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/arraylist.cpp
-	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/arraylist.cpp -o src/classes/arraylist.lo 
-src/classes/linkedlist.lo: /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/linkedlist.cpp
-	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/linkedlist.cpp -o src/classes/linkedlist.lo 
-src/classes/doublylinkedlist.lo: /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/doublylinkedlist.cpp
-	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/doublylinkedlist.cpp -o src/classes/doublylinkedlist.lo 
-src/classes/zend_list.lo: /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/zend_list.cpp
-	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/zend_list.cpp -o src/classes/zend_list.lo 
-src/classes/zend_interface.lo: /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/zend_interface.cpp
-	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/src/classes/zend_interface.cpp -o src/classes/zend_interface.lo 
-data_types_api.lo: /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/data_types_api.cpp
-	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/Workspaces/workspace_cpp/CollectionsAPI_NEW/data_types_api.cpp -o data_types_api.lo 
+src/classes/arraylist.lo: /home/aherne/git/php-data-structures/src/classes/arraylist.cpp
+	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/git/php-data-structures $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/git/php-data-structures/src/classes/arraylist.cpp -o src/classes/arraylist.lo 
+src/classes/linkedlist.lo: /home/aherne/git/php-data-structures/src/classes/linkedlist.cpp
+	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/git/php-data-structures $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/git/php-data-structures/src/classes/linkedlist.cpp -o src/classes/linkedlist.lo 
+src/classes/doublylinkedlist.lo: /home/aherne/git/php-data-structures/src/classes/doublylinkedlist.cpp
+	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/git/php-data-structures $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/git/php-data-structures/src/classes/doublylinkedlist.cpp -o src/classes/doublylinkedlist.lo 
+src/classes/zend_list.lo: /home/aherne/git/php-data-structures/src/classes/zend_list.cpp
+	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/git/php-data-structures $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/git/php-data-structures/src/classes/zend_list.cpp -o src/classes/zend_list.lo 
+src/classes/zend_interface.lo: /home/aherne/git/php-data-structures/src/classes/zend_interface.cpp
+	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/git/php-data-structures $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/git/php-data-structures/src/classes/zend_interface.cpp -o src/classes/zend_interface.lo 
+data_types_api.lo: /home/aherne/git/php-data-structures/data_types_api.cpp
+	$(LIBTOOL) --mode=compile $(CXX)  -I. -I/home/aherne/git/php-data-structures $(COMMON_FLAGS) $(CXXFLAGS_CLEAN) $(EXTRA_CXXFLAGS)  -c /home/aherne/git/php-data-structures/data_types_api.cpp -o data_types_api.lo 
 $(phplibdir)/data_types_api.la: ./data_types_api.la
 	$(LIBTOOL) --mode=install cp ./data_types_api.la $(phplibdir)
 

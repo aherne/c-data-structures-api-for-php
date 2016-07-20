@@ -19,9 +19,13 @@ struct DoublyLinkedListEntry {
 };
 
 template<typename T>
-class DoublyLinkedList: public List<T> {
-	public:
+class DoublyLinkedListIterator;
 
+template<typename T>
+class DoublyLinkedList: public List<T> {
+	friend class DoublyLinkedListIterator<T>;
+	public:
+		typedef DoublyLinkedListIterator<T> iterator;
 		DoublyLinkedList() {
 			head = nullptr;
 			tail = nullptr;
@@ -185,6 +189,14 @@ class DoublyLinkedList: public List<T> {
 
 			if(oldCount == count) throw std::out_of_range("Value not found!");
 		}
+
+		iterator begin() {
+			return iterator(this);
+		}
+
+		iterator end(){
+			return iterator(count);
+		}
 	private:
 		void traverse(const std::size_t& index) const {
 			if(index==currentIndex) return;
@@ -301,8 +313,9 @@ class DoublyLinkedList: public List<T> {
 
 template<>
 class DoublyLinkedList<zval*>: public List<zval*> {
+	friend class DoublyLinkedListIterator<zval*>;
 	public:
-
+		typedef DoublyLinkedListIterator<zval*> iterator;
 		DoublyLinkedList() {
 			head = nullptr;
 			tail = nullptr;
@@ -472,6 +485,10 @@ class DoublyLinkedList<zval*>: public List<zval*> {
 
 			if(oldCount == count) throw std::out_of_range("Value not found!");
 		}
+
+		iterator begin();
+
+		iterator end();
 	private:
 		void traverse(const std::size_t& index) const {
 			if(index==currentIndex) return;
@@ -590,5 +607,65 @@ class DoublyLinkedList<zval*>: public List<zval*> {
 		mutable std::size_t currentIndex;
 		mutable DoublyLinkedListEntry<zval*>* currentItem;
 };
+
+template<typename T>
+class DoublyLinkedListIterator {
+	public:
+		DoublyLinkedListIterator(){
+			list = nullptr;
+			current_item = nullptr;
+			offset = 0;
+		}
+
+		DoublyLinkedListIterator(DoublyLinkedList<T>* list){
+			this->list = list;
+			current_item = list->head;
+			offset = 0;
+		}
+
+		DoublyLinkedListIterator(std::size_t total){
+			list = nullptr;
+			current_item = nullptr;
+			offset = total;
+		}
+
+		~DoublyLinkedListIterator(){}
+
+		const T operator*(){
+			return current_item->value;
+		}
+
+		void remove() {
+			DoublyLinkedListEntry<T>* tmp = current_item->previous;
+			list->deleteItem(current_item);
+			current_item = tmp;
+			--offset;
+		}
+
+		bool operator!=(const DoublyLinkedListIterator<T>& it) const {
+			return offset!=it.offset;
+		}
+
+		DoublyLinkedListIterator<T>& operator++(){
+			if(current_item!=nullptr) {
+				current_item = current_item->next;
+			}
+			++offset;
+			return *this;
+		}
+
+	private:
+		DoublyLinkedList<T>* list;
+		DoublyLinkedListEntry<T>* current_item;
+		std::size_t offset;
+};
+
+inline DoublyLinkedListIterator<zval*> DoublyLinkedList<zval*>::begin() {
+	return DoublyLinkedListIterator<zval*>(this);
+}
+
+inline DoublyLinkedListIterator<zval*> DoublyLinkedList<zval*>::end() {
+	return DoublyLinkedListIterator<zval*>(count);
+}
 
 #endif /* LIST_DOUBLYLINKEDLIST_H_ */

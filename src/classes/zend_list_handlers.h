@@ -32,15 +32,15 @@ private:
 		if (obj->object != NULL) {
 			try {
 				if(obj->type==TYPE_LONG){
-					retval = long2zval(obj->object->object_long->get(index));
+					retval = long2zval(((List<long>*) obj->object)->get(index));
 				} else if(obj->type==TYPE_DOUBLE){
-					retval = double2zval(obj->object->object_double->get(index));
+					retval = double2zval(((List<double>*) obj->object)->get(index));
 				} else if(obj->type==TYPE_BOOLEAN){
-					retval = bool2zval(obj->object->object_boolean->get(index));
+					retval = bool2zval(((List<char>*) obj->object)->get(index));
 				} else if(obj->type==TYPE_STRING){
-					retval = str2zval(obj->object->object_string->get(index));
+					retval = str2zval(((List<char*>*) obj->object)->get(index));
 				} else {
-					retval = obj->object->object_zval->get(index);
+					retval = ((List<zval*>*) obj->object)->get(index);
 				}
 			} catch (const std::out_of_range& e) {
 				zend_throw_exception(NULL, "Key must already exist!", 0 TSRMLS_CC);
@@ -56,17 +56,17 @@ private:
 			if(!zv_offset) {
 				try{
 		    		if(obj->type == TYPE_LONG) {
-		    			obj->object->object_long->addToBottom(zval2long(value));
+		    			((List<long>*) obj->object)->addToBottom(zval2long(value));
 		    		} else if (obj->type == TYPE_DOUBLE) {
-		    			obj->object->object_double->addToBottom(zval2double(value));
+		    			((List<double>*) obj->object)->addToBottom(zval2double(value));
 		    		} else if (obj->type == TYPE_BOOLEAN) {
-		    			obj->object->object_boolean->addToBottom(zval2bool(value));
+		    			((List<char>*) obj->object)->addToBottom(zval2bool(value));
 		    		} else if (obj->type == TYPE_STRING) {
-		    			obj->object->object_string->addToBottom(zval2str(value, obj->memory_manager));
+		    			((List<char*>*) obj->object)->addToBottom(zval2str(value, obj->memory_manager));
 		    		} else if (obj->type == TYPE_OBJECT) {
-		    			obj->object->object_zval->addToBottom(zval2object(value, obj->class_name));
+		    			((List<zval*>*) obj->object)->addToBottom(zval2object(value, obj->class_name));
 		    		} else {
-		    			obj->object->object_zval->addToBottom(value);
+		    			((List<zval*>*) obj->object)->addToBottom(value);
 		    		}
 				} catch(const std::runtime_error& e) {
 					zend_throw_exception(NULL, e.what(), 0 TSRMLS_CC);
@@ -81,17 +81,17 @@ private:
 				index = Z_LVAL_P(zv_offset);
 				try {
 		    		if(obj->type == TYPE_LONG) {
-		    			obj->object->object_long->set(index, zval2long(value));
+		    			((List<long>*) obj->object)->set(index, zval2long(value));
 		    		} else if (obj->type == TYPE_DOUBLE) {
-		    			obj->object->object_double->set(index, zval2double(value));
+		    			((List<double>*) obj->object)->set(index, zval2double(value));
 		    		} else if (obj->type == TYPE_BOOLEAN) {
-		    			obj->object->object_boolean->set(index, zval2bool(value));
+		    			((List<char>*) obj->object)->set(index, zval2bool(value));
 		    		} else if (obj->type == TYPE_STRING) {
-		    			obj->object->object_string->set(index, zval2str(value, obj->memory_manager));
+		    			((List<char*>*) obj->object)->set(index, zval2str(value, obj->memory_manager));
 		    		} else if (obj->type == TYPE_OBJECT) {
-		    			obj->object->object_zval->set(index, zval2object(value, obj->class_name));
+		    			((List<zval*>*) obj->object)->set(index, zval2object(value, obj->class_name));
 		    		} else {
-		    			obj->object->object_zval->set(index, value);
+		    			((List<zval*>*) obj->object)->set(index, value);
 		    		}
 				} catch(const std::runtime_error& e) {
 					zend_throw_exception(NULL, e.what(), 0 TSRMLS_CC);
@@ -115,15 +115,15 @@ private:
 		list_object *obj = (list_object *)zend_object_store_get_object(object TSRMLS_CC);
 		if (obj->object != NULL) {
 			if(obj->type==TYPE_LONG){
-				return obj->object->object_long->containsIndex(index);
+				return ((List<long>*) obj->object)->containsIndex(index);
 			} else if(obj->type==TYPE_DOUBLE){
-				return obj->object->object_double->containsIndex(index);
+				return ((List<double>*) obj->object)->containsIndex(index);
 			} else if(obj->type==TYPE_BOOLEAN){
-				return obj->object->object_boolean->containsIndex(index);
+				return ((List<char>*) obj->object)->containsIndex(index);
 			} else if(obj->type==TYPE_STRING){
-				return obj->object->object_string->containsIndex(index);
+				return ((List<char*>*) obj->object)->containsIndex(index);
 			} else {
-				return obj->object->object_zval->containsIndex(index);
+				return ((List<zval*>*) obj->object)->containsIndex(index);
 			}
 		}
 		return 0;
@@ -141,15 +141,15 @@ private:
 		if (obj->object != NULL) {
 			try {
 				if(obj->type==TYPE_LONG){
-					obj->object->object_long->removeIndex(index);
+					((List<long>*) obj->object)->removeIndex(index);
 				} else if(obj->type==TYPE_DOUBLE){
-					obj->object->object_double->removeIndex(index);
+					((List<double>*) obj->object)->removeIndex(index);
 				} else if(obj->type==TYPE_BOOLEAN){
-					obj->object->object_boolean->removeIndex(index);
+					((List<char>*) obj->object)->removeIndex(index);
 				} else if(obj->type==TYPE_STRING){
-					obj->object->object_string->removeIndex(index);
+					((List<char*>*) obj->object)->removeIndex(index);
 				} else {
-					obj->object->object_zval->removeIndex(index);
+					((List<zval*>*) obj->object)->removeIndex(index);
 				}
 			} catch (const std::out_of_range& e) {
 				zend_throw_exception(NULL, "Key must already exist!", 0 TSRMLS_CC);
@@ -160,7 +160,17 @@ private:
 	static int count_elements(zval *object, long *count TSRMLS_DC) {
 		list_object *obj = (list_object *)zend_object_store_get_object(object TSRMLS_CC);
 		if (obj->object != NULL) {
-			*count = obj->object->size();
+			if(obj->type==TYPE_LONG){
+				*count = ((List<long>*) obj->object)->size();
+			} else if(obj->type==TYPE_DOUBLE){
+				*count = ((List<double>*) obj->object)->size();
+			} else if(obj->type==TYPE_BOOLEAN){
+				*count = ((List<char>*) obj->object)->size();
+			} else if(obj->type==TYPE_STRING){
+				*count = ((List<char*>*) obj->object)->size();
+			} else {
+				*count = ((List<zval*>*) obj->object)->size();
+			}
 			return SUCCESS;
 		}
 		return FAILURE;

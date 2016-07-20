@@ -48,11 +48,11 @@ private:
 
 	static int valid(zend_object_iterator *intern TSRMLS_DC){
 		list_object_iterator *iter = (list_object_iterator*) intern;
-		if(iter->view->type==TYPE_LONG) 		return iter->offset < iter->view->object->object_long->size() ? SUCCESS : FAILURE;
-		else if(iter->view->type==TYPE_DOUBLE) 	return iter->offset < iter->view->object->object_double->size() ? SUCCESS : FAILURE;
-		else if(iter->view->type==TYPE_BOOLEAN) return iter->offset < iter->view->object->object_boolean->size() ? SUCCESS : FAILURE;
-		else if(iter->view->type==TYPE_STRING) 	return iter->offset < iter->view->object->object_string->size() ? SUCCESS : FAILURE;
-		else 									return iter->offset < iter->view->object->object_zval->size() ? SUCCESS : FAILURE;
+		if(iter->view->type==TYPE_LONG) 		return iter->offset < ((List<long>*) iter->view->object)->size() ? SUCCESS : FAILURE;
+		else if(iter->view->type==TYPE_DOUBLE) 	return iter->offset < ((List<double>*) iter->view->object)->size() ? SUCCESS : FAILURE;
+		else if(iter->view->type==TYPE_BOOLEAN) return iter->offset < ((List<char>*) iter->view->object)->size() ? SUCCESS : FAILURE;
+		else if(iter->view->type==TYPE_STRING) 	return iter->offset < ((List<char*>*) iter->view->object)->size() ? SUCCESS : FAILURE;
+		else 									return iter->offset < ((List<zval*>*) iter->view->object)->size() ? SUCCESS : FAILURE;
 	}
 
 	static void get_current_data(zend_object_iterator *intern, zval ***data TSRMLS_DC) {
@@ -63,36 +63,36 @@ private:
 			}
 	    }
 		if(iter->view->type==TYPE_LONG){
-		    if (iter->offset < iter->view->object->object_long->size()) {
-		        iter->current = long2zval((*iter->view->object->object_long)[iter->offset]);
+		    if (iter->offset < ((List<long>*) iter->view->object)->size()) {
+		        iter->current = long2zval((*((List<long>*) iter->view->object))[iter->offset]);
 		        *data = &iter->current;
 		    } else {
 		        *data = NULL;
 		    }
 		} else if(iter->view->type==TYPE_DOUBLE){
-		    if (iter->offset < iter->view->object->object_double->size()) {
-		        iter->current = double2zval((*iter->view->object->object_double)[iter->offset]);
+		    if (iter->offset < ((List<double>*) iter->view->object)->size()) {
+		        iter->current = double2zval((*((List<double>*) iter->view->object))[iter->offset]);
 		        *data = &iter->current;
 		    } else {
 		        *data = NULL;
 		    }
 		} else if(iter->view->type==TYPE_BOOLEAN){
-		    if (iter->offset < iter->view->object->object_boolean->size()) {
-		        iter->current = bool2zval((*iter->view->object->object_boolean)[iter->offset]);
+		    if (iter->offset < ((List<char>*) iter->view->object)->size()) {
+		        iter->current = bool2zval((*((List<char>*) iter->view->object))[iter->offset]);
 		        *data = &iter->current;
 		    } else {
 		        *data = NULL;
 		    }
 		} else if(iter->view->type==TYPE_STRING){
-		    if (iter->offset < iter->view->object->object_string->size()) {
-		        iter->current = str2zval((*iter->view->object->object_string)[iter->offset]);
+		    if (iter->offset < ((List<char*>*) iter->view->object)->size()) {
+		        iter->current = str2zval((*((List<char*>*) iter->view->object))[iter->offset]);
 		        *data = &iter->current;
 		    } else {
 		        *data = NULL;
 		    }
 		} else {
-		    if (iter->offset < iter->view->object->object_zval->size()) {
-		        iter->current = (*iter->view->object->object_zval)[iter->offset];
+		    if (iter->offset <((List<zval*>*) iter->view->object)->size()) {
+		        iter->current = (*((List<zval*>*) iter->view->object))[iter->offset];
 		        *data = &iter->current;
 		    } else {
 		        *data = NULL;
