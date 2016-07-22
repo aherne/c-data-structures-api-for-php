@@ -8,6 +8,8 @@
 #ifndef SRC_ZEND_CLASSES_LISTZENDINTERFACE_H_
 #define SRC_ZEND_CLASSES_LISTZENDINTERFACE_H_
 
+#include "../common.h"
+
 class ZendInterface {
 public:
 	ZendInterface(const char name[], const zend_function_entry methods[]);
