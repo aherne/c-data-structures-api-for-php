@@ -9,6 +9,7 @@
 #define SRC_CONVERSIONS_H_
 #include <limits>
 #include <stdexcept>
+#include <iostream>
 
 static inline long str2long(char*& s) {
     char* end;
@@ -108,13 +109,13 @@ static inline char* zval2str(zval*& value, MemoryManager<char*>*& mm) {
 	}
 }
 
-static inline zval*& zval2object(zval*& value, char*& class_name) {
+static inline zval*& zval2object(zval*& value, zend_class_entry*& class_entry) {
 	if(Z_TYPE_P(value)!=IS_OBJECT) {
 		throw std::runtime_error("Value must be object!");
 	}
-	if(strcmp(class_name, Z_OBJCE_P(value)->name)!=0) {
+	if(!instanceof_function(class_entry, Z_OBJCE_P(value))) {
 		char result[100]= "Value must be instance of: ";
-		strcat(result,class_name);
+		strcat(result,class_entry->name);
 		throw std::runtime_error(result);
 	}
 	return value;

@@ -16,7 +16,7 @@ struct list_object {
 	void* object;							// since we expose a generic-based structure to a C api, void* is a must (unless we want separate classes for each type @ PHP)
 
 	MemoryManager<char*>* memory_manager;	// specific to list_object<char*>.
-    char* class_name;						// specific to list_object<zval*> where zval is of zend_class_entry type
+    zend_class_entry* class_entry;			// specific to list_object<zval*> where zval is of zend_class_entry type
 };
 
 

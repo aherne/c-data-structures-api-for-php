@@ -28,7 +28,9 @@ PHP_METHOD(ArrayList, __construct){
 		obj->memory_manager = new MemoryManager<char*>;
 		obj->object = new ArrayList<char*>;
 	} else if(type==TYPE_OBJECT) {
-		obj->class_name = strdup(Z_STRVAL_P(temp));
+		zend_class_entry** ce;
+		zend_lookup_class(Z_STRVAL_P(temp), Z_STRLEN_P(temp), &ce TSRMLS_CC);
+		obj->class_entry = *ce;
 		obj->object = new ArrayList<zval*>;
 	} else {
 		obj->object = new ArrayList<zval*>;
@@ -54,9 +56,6 @@ PHP_METHOD(ArrayList, __destruct){
 		if(obj->type == TYPE_STRING) {
 			delete obj->memory_manager;
 			obj->memory_manager = NULL;
-		} else if(obj->type == TYPE_OBJECT) {
-			delete obj->class_name;
-			obj->class_name = NULL;
 		}
 	}
 }
@@ -79,7 +78,7 @@ PHP_METHOD(ArrayList, addToTop){
     		} else if (obj->type == TYPE_STRING) {
     			((List<char*>*) obj->object)->addToTop(zval2str(temp, obj->memory_manager));
     		} else if (obj->type == TYPE_OBJECT) {
-    			((List<zval*>*) obj->object)->addToTop(zval2object(temp, obj->class_name));
+    			((List<zval*>*) obj->object)->addToTop(zval2object(temp, obj->class_entry));
     		} else {
     			((List<zval*>*) obj->object)->addToTop(temp);
     		}
@@ -108,7 +107,7 @@ PHP_METHOD(ArrayList, addToBottom){
     		} else if (obj->type == TYPE_STRING) {
     			((List<char*>*) obj->object)->addToBottom(zval2str(temp, obj->memory_manager));
     		} else if (obj->type == TYPE_OBJECT) {
-    			((List<zval*>*) obj->object)->addToBottom(zval2object(temp, obj->class_name));
+    			((List<zval*>*) obj->object)->addToBottom(zval2object(temp, obj->class_entry));
     		} else {
     			((List<zval*>*) obj->object)->addToBottom(temp);
     		}
@@ -138,7 +137,7 @@ PHP_METHOD(ArrayList, set){
     		} else if (obj->type == TYPE_STRING) {
     			((List<char*>*) obj->object)->set(index, zval2str(temp, obj->memory_manager));
     		} else if (obj->type == TYPE_OBJECT) {
-    			((List<zval*>*) obj->object)->set(index, zval2object(temp, obj->class_name));
+    			((List<zval*>*) obj->object)->set(index, zval2object(temp, obj->class_entry));
     		} else {
     			((List<zval*>*) obj->object)->set(index, temp);
     		}
@@ -171,7 +170,7 @@ PHP_METHOD(ArrayList, emplace){
     		} else if (obj->type == TYPE_STRING) {
     			((List<char*>*) obj->object)->emplace(index, zval2str(temp, obj->memory_manager));
     		} else if (obj->type == TYPE_OBJECT) {
-    			((List<zval*>*) obj->object)->emplace(index, zval2object(temp, obj->class_name));
+    			((List<zval*>*) obj->object)->emplace(index, zval2object(temp, obj->class_entry));
     		} else {
     			((List<zval*>*) obj->object)->emplace(index, temp);
     		}
@@ -313,7 +312,7 @@ PHP_METHOD(ArrayList, containsValue) {
     		} else if (obj->type == TYPE_STRING) {
     			RETURN_BOOL(((List<char*>*) obj->object)->containsValue(zval2str(temp, obj->memory_manager)));
     		} else if (obj->type == TYPE_OBJECT) {
-    			RETURN_BOOL(((List<zval*>*) obj->object)->containsValue(zval2object(temp, obj->class_name)));
+    			RETURN_BOOL(((List<zval*>*) obj->object)->containsValue(zval2object(temp, obj->class_entry)));
     		} else {
     			RETURN_BOOL(((List<zval*>*) obj->object)->containsValue(temp));
     		}
@@ -342,7 +341,7 @@ PHP_METHOD(ArrayList, removeValue) {
     		} else if (obj->type == TYPE_STRING) {
     			((List<char*>*) obj->object)->removeValue(zval2str(temp, obj->memory_manager));
     		} else if (obj->type == TYPE_OBJECT) {
-    			((List<zval*>*) obj->object)->removeValue(zval2object(temp, obj->class_name));
+    			((List<zval*>*) obj->object)->removeValue(zval2object(temp, obj->class_entry));
     		} else {
     			((List<zval*>*) obj->object)->removeValue(temp);
     		}

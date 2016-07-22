@@ -53,11 +53,6 @@ void ListZendClass::free_object(void *object TSRMLS_DC){
 		obj->memory_manager = NULL;
 	}
 
-	if(obj->class_name!=NULL) {
-		delete obj->class_name;
-		obj->class_name = NULL;
-	}
-
 	// free the array of properties
 	zend_hash_destroy(obj->std.properties);
 	FREE_HASHTABLE(obj->std.properties);

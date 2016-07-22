@@ -64,7 +64,7 @@ private:
 		    		} else if (obj->type == TYPE_STRING) {
 		    			((List<char*>*) obj->object)->addToBottom(zval2str(value, obj->memory_manager));
 		    		} else if (obj->type == TYPE_OBJECT) {
-		    			((List<zval*>*) obj->object)->addToBottom(zval2object(value, obj->class_name));
+		    			((List<zval*>*) obj->object)->addToBottom(zval2object(value, obj->class_entry));
 		    		} else {
 		    			((List<zval*>*) obj->object)->addToBottom(value);
 		    		}
@@ -89,7 +89,7 @@ private:
 		    		} else if (obj->type == TYPE_STRING) {
 		    			((List<char*>*) obj->object)->set(index, zval2str(value, obj->memory_manager));
 		    		} else if (obj->type == TYPE_OBJECT) {
-		    			((List<zval*>*) obj->object)->set(index, zval2object(value, obj->class_name));
+		    			((List<zval*>*) obj->object)->set(index, zval2object(value, obj->class_entry));
 		    		} else {
 		    			((List<zval*>*) obj->object)->set(index, value);
 		    		}
