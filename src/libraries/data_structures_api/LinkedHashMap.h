@@ -644,6 +644,7 @@ class LinkedHashMapIterator : public MapIterator<_KEY,_VALUE> {
 		~LinkedHashMapIterator(){}
 
 		const std::pair<_KEY, _VALUE> operator*(){
+			if(current_item==nullptr) throw std::out_of_range("Key not found!");
 			return std::make_pair(current_item->data.key, current_item->data.value);
 		}
 

@@ -1,8 +1,12 @@
 #include "php_data_types_api.h"
+#include "src/classes/list_interface.h"
 #include "src/classes/arraylist.h"
 #include "src/classes/linkedlist.h"
 #include "src/classes/doublylinkedlist.h"
+#include "src/classes/hashable_interface.h"
+#include "src/classes/comparable_interface.h"
 #include "src/classes/zend_list.h"
+#include "src/classes/zend_interface.h"
 #include "src/classes/zend_interface.h"
 
 #define PHP_DATA_TYPES_API_EXTNAME  "data_types_api"
@@ -12,6 +16,8 @@
 PHP_MINIT_FUNCTION(data_types_api)
 {
 	ZendInterface listInterface(list_interface_name, list_interface_methods);
+	ZendInterface hashableInterface(hashable_interface_name, hashable_interface_methods);
+	ZendInterface comparableInterface(comparable_interface_name, comparable_interface_methods);
 
 	ListZendClass arrayListClass(arraylist_class_name, arraylist_class_methods);
 	arrayListClass.implements(listInterface.getInterfaceEntry());
