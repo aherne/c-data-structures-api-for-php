@@ -113,7 +113,7 @@ static inline zval*& zval2object(zval*& value, zend_class_entry*& class_entry) {
 	if(Z_TYPE_P(value)!=IS_OBJECT) {
 		throw std::runtime_error("Value must be object!");
 	}
-	if(!instanceof_function(class_entry, Z_OBJCE_P(value))) {
+	if(!instanceof_function(Z_OBJCE_P(value),class_entry)) {
 		char result[100]= "Value must be instance of: ";
 		strcat(result,class_entry->name);
 		throw std::runtime_error(result);
