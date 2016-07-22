@@ -29,9 +29,7 @@ PHP_METHOD(LinkedList, __construct){
 		obj->memory_manager = new MemoryManager<char*>;
 		obj->object = new LinkedList<char*>;
 	} else if(type==TYPE_OBJECT) {
-		zend_class_entry** ce;
-		zend_lookup_class(Z_STRVAL_P(temp), Z_STRLEN_P(temp), &ce TSRMLS_CC);
-		obj->class_entry = *ce;
+		obj->class_entry = str2class(temp);
 		obj->object = new LinkedList<zval*>;
 	} else {
 		obj->object = new LinkedList<zval*>;

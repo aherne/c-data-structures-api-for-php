@@ -9,7 +9,6 @@
 #define SRC_CONVERSIONS_H_
 #include <limits>
 #include <stdexcept>
-#include <iostream>
 
 static inline long str2long(char*& s) {
     char* end;
@@ -153,4 +152,11 @@ static inline zval* bool2zval(const char& value) {
 	Z_LVAL_P(retval) = value;
 	return retval;
 }
+
+static inline zend_class_entry* str2class(zval*& temp) {
+	zend_class_entry** ce;
+	zend_lookup_class(Z_STRVAL_P(temp), Z_STRLEN_P(temp), &ce TSRMLS_CC);
+	return *ce;
+}
+
 #endif /* SRC_CONVERSIONS_H_ */

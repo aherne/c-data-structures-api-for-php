@@ -28,9 +28,7 @@ PHP_METHOD(ArrayList, __construct){
 		obj->memory_manager = new MemoryManager<char*>;
 		obj->object = new ArrayList<char*>;
 	} else if(type==TYPE_OBJECT) {
-		zend_class_entry** ce;
-		zend_lookup_class(Z_STRVAL_P(temp), Z_STRLEN_P(temp), &ce TSRMLS_CC);
-		obj->class_entry = *ce;
+		obj->class_entry = str2class(temp);
 		obj->object = new ArrayList<zval*>;
 	} else {
 		obj->object = new ArrayList<zval*>;
