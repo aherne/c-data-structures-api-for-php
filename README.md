@@ -6,12 +6,13 @@ So far PHP only supports hash table (aka "array") as native data structure. This
 * adding features missing in default hash table implementation (eg: using objects as keys)
 * adding type-aware support (eg: list with SPECIFICALLY integer values) to all data structures implemented which brings huge performance benefits whenever they map to native C/C++ types
 
-Development will be done in steps. Each step is complete only after thorough unit-testing. The list of steps are:<br/>
-1. Implementation of Lists. COMPLETE!!!<br/>
-2. Implementation of Maps<br/>
-3. Implementation of Sets<br/>
-4. Implementation of Stacks & Queues<br/>
-5. Implementation of Trees<br/>
+Development will be done in steps. Each step is complete only after thorough unit-testing. The list of steps are:
+
+1. Implementation of Lists. COMPLETE!!!
+2. Implementation of Maps
+3. Implementation of Sets
+4. Implementation of Stacks & Queues
+5. Implementation of Trees
 
 <strong>So far the extension is already tested and usable if you want to use Lists only.</strong> 
 
