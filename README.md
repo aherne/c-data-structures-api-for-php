@@ -6,11 +6,11 @@ So far PHP only supports hash table (aka "array") as native data structure. This
 3. adding type-aware support (eg: list with SPECIFICALLY integer values) to all data structures implemented which brings huge performance benefits whenever they map to native C/C++ types<br/>
 
 Development will be done in steps. Each step is complete only after thorough unit-testing. The list of steps are:<br/>
-1. Implementation of Lists. COMPLETE!!!<br/>
-2. Implementation of Maps<br/>
-3. Implementation of Sets<br/>
-4. Implementation of Stacks & Queues<br/>
-5. Implementation of Trees<br/>
+	1. Implementation of Lists. COMPLETE!!!
+	2. Implementation of Maps
+	3. Implementation of Sets
+	4. Implementation of Stacks & Queues
+	5. Implementation of Trees
 
 <strong>So far the extension is already tested and usable if you want to use Lists only.</strong> 
 
@@ -37,13 +37,13 @@ Exposed PHP classes are:
 	- larger memory consumption
 3. <strong>DoublyLinkedList</strong>: a list implemented using <a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly linked lists</a>, 
 	good for:
-	- fast insertion on top/bottom
-	- fast deletion of next/previous elements (compared to head, tail or iterator* position)
-	- fast access of next/previous element (compared to head, tail or iterator* position)
+		- fast insertion on top/bottom
+		- fast deletion of next/previous elements (compared to head, tail or iterator* position)
+		- fast access of next/previous element (compared to head, tail or iterator* position)
 	bad for:
-	- random access of elements
-	- deletion of any element other than next/previous (compared to head, tail or iterator* position)
-	- largest memory consumption
+		- random access of elements
+		- deletion of any element other than next/previous (compared to head, tail or iterator* position)
+		- largest memory consumption
 <small>* To speed up operations, both linked lists and doubly linked list use an internal iterator that points to current node as you traverse list's contents. Any operation that involves an element (get/set/delete) modifies iterator as well.</small>
 
 All three classes implement <strong>Lists</strong> interface, which defines following operations:
@@ -108,11 +108,11 @@ All three classes implement <strong>Lists</strong> interface, which defines foll
 where TYPE can be any valid <a href="http://php.net/manual/ro/language.types.php">PHP type</a>.
 	
 Because PHP so far doesn't support <a href="https://en.wikipedia.org/wiki/Generic_programming">generics</a>, in order for lists to be type-aware, constructors for classes that implement Lists (ArrayList, LinkedList, DoublyLinkedList) have a single non-optional argument that identifies type of values inside. Types can be:
-1. "mixed": this means list will store values of ANY type. Slower and more memory-hungry by orders of magnitude compared to below. Rarely if ever needed in real-life experience.
-2. "int"/"integer": this means list is optimized to only hold values of C long type. Extremely fast and with lowest memory consumption.
-3. "double"/"float": this means list is optimized to only hold values of C double type. Extremely fast and with lowest memory consumption.
-4. "string": this means list is optimized to only hold values of C char* type. Very fast and with low memory consumption.
-5. your-class/interface-name: this means list will only hold objects of your desired class/interface. Slightly slower than 1# because it type-validates every entry with instanceof and just as memory-hungry (both holding values of C <a href="http://php.net/manual/en/internals2.variables.intro.php">zval*</a> type).
+	1. "mixed": this means list will store values of ANY type. Slower and more memory-hungry by orders of magnitude compared to below. Rarely if ever needed in real-life experience.
+	2. "int"/"integer": this means list is optimized to only hold values of C long type. Extremely fast and with lowest memory consumption.
+	3. "double"/"float": this means list is optimized to only hold values of C double type. Extremely fast and with lowest memory consumption.
+	4. "string": this means list is optimized to only hold values of C char* type. Very fast and with low memory consumption.
+	5. your-class/interface-name: this means list will only hold objects of your desired class/interface. Slightly slower than 1# because it type-validates every entry with instanceof and just as memory-hungry (both holding values of C <a href="http://php.net/manual/en/internals2.variables.intro.php">zval*</a> type).
 Of course, all slowness and memory-hungriness mentioned above are relative. When compared to standard PHP array, any list, regardless of implementation or value type, is MUCH more optimal (as benchmarks below show).
 
 
