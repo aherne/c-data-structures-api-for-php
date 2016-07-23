@@ -2,9 +2,9 @@
 
 So far PHP only supports hash table (aka "array") as native data structure. This means whenever one needs a different data structure (eg: list) the only way to do it is via "array" (eg: operator[] for lists), which creates massive performance costs (high CPU time as well as memory consumption). This extension is aimed at fixing this problem by:
 
-* adding native C/C++ implementations for missing data structures that will become available to all PHP programmers using this extension<br/>
-* adding features missing in default hash table implementation (eg: using objects as keys) <br/>
-* adding type-aware support (eg: list with SPECIFICALLY integer values) to all data structures implemented which brings huge performance benefits whenever they map to native C/C++ types<br/>
+* adding native C/C++ implementations for missing data structures that will become available to all PHP programmers using this extension
+* adding features missing in default hash table implementation (eg: using objects as keys)
+* adding type-aware support (eg: list with SPECIFICALLY integer values) to all data structures implemented which brings huge performance benefits whenever they map to native C/C++ types
 
 Development will be done in steps. Each step is complete only after thorough unit-testing. The list of steps are:<br/>
 1. Implementation of Lists. COMPLETE!!!<br/>
