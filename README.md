@@ -8,7 +8,7 @@ So far PHP only supports hash table (aka "array") as native data structure. This
 
 Development will be done in steps. Each step is complete only after thorough unit-testing. The list of steps are:
 
-1. Implementation of Lists. COMPLETE!!!
+1. Implementation of Lists. <font color="red"><strong>COMPLETE!!!</strong></font>
 2. Implementation of Maps
 3. Implementation of Sets
 4. Implementation of Stacks & Queues
@@ -19,33 +19,33 @@ Development will be done in steps. Each step is complete only after thorough uni
 <h2>LISTS</h2>
 Exposed PHP classes are:
 
-- <strong>ArrayList</strong>: a list implemented using <a href="https://en.wikipedia.org/wiki/Dynamic_array">dynamic arrays</a>, 
-	good for:
-		- fastest insertion on bottom
-		- fastest deletion from bottom
-		- fastest random access of elements
-		- smallest memory consumption
-	very bad for:
-		- insertion on top
-		- deletion from any position other than bottom
-- <strong>LinkedList</strong>: a list implemented using <a href="https://en.wikipedia.org/wiki/Linked_list">linked lists</a>, 
-	good for:
-		- fast insertion on top/bottom
-		- fast deletion of next elements (compared to head or iterator* position)
-		- fast access of next element (compared to head or iterator* position)
-	bad for:
-		- random access of elements
-		- deletion of any element other than next (compared to head or iterator* position)
-		- larger memory consumption
-- <strong>DoublyLinkedList</strong>: a list implemented using <a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly linked lists</a>, 
-	good for:
-		- fast insertion on top/bottom
-		- fast deletion of next/previous elements (compared to head, tail or iterator* position)
-		- fast access of next/previous element (compared to head, tail or iterator* position)
-	bad for:
-		- random access of elements
-		- deletion of any element other than next/previous (compared to head, tail or iterator* position)
-		- largest memory consumption
+* <strong>ArrayList</strong>: a list implemented using <a href="https://en.wikipedia.org/wiki/Dynamic_array">dynamic arrays</a>
+	* good for:
+		* fastest insertion on bottom
+		* fastest deletion from bottom
+		* fastest random access of elements
+		* smallest memory consumption
+	* very bad for:
+		* insertion on top
+		* deletion from any position other than bottom
+* <strong>LinkedList</strong>: a list implemented using <a href="https://en.wikipedia.org/wiki/Linked_list">linked lists</a>, 
+	* good for:
+		* fast insertion on top/bottom
+		* fast deletion of next elements (compared to head or iterator* position)
+		* fast access of next element (compared to head or iterator* position)
+	* bad for:
+		* random access of elements
+		* deletion of any element other than next (compared to head or iterator* position)
+		* larger memory consumption
+* <strong>DoublyLinkedList</strong>: a list implemented using <a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly linked lists</a>, 
+	* good for:
+		* fast insertion on top/bottom
+		* fast deletion of next/previous elements (compared to head, tail or iterator* position)
+		* fast access of next/previous element (compared to head, tail or iterator* position)
+	* bad for:
+		* random access of elements
+		* deletion of any element other than next/previous (compared to head, tail or iterator* position)
+		* largest memory consumption
 <small>* To speed up operations, both linked lists and doubly linked list use an internal iterator that points to current node as you traverse list's contents. Any operation that involves an element (get/set/delete) modifies iterator as well.</small>
 
 All three classes implement <strong>Lists</strong> interface, which defines following operations:
