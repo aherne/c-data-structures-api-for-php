@@ -46,6 +46,7 @@ Exposed PHP classes are:
 		* random access of elements
 		* deletion of any element other than next/previous (compared to head, tail or iterator* position)
 		* largest memory consumption
+
 <small>* To speed up operations, both linked lists and doubly linked list use an internal iterator that points to current node as you traverse list's contents. Any operation that involves an element (get/set/delete) modifies iterator as well.</small>
 
 All three classes implement <strong>Lists</strong> interface, which defines following operations:
@@ -110,12 +111,15 @@ All three classes implement <strong>Lists</strong> interface, which defines foll
 where TYPE can be any valid <a href="http://php.net/manual/ro/language.types.php">PHP type</a>.
 	
 Because PHP so far doesn't support <a href="https://en.wikipedia.org/wiki/Generic_programming">generics</a>, in order for lists to be type-aware, constructors for classes that implement Lists (ArrayList, LinkedList, DoublyLinkedList) have a single non-optional argument that identifies type of values inside. Types can be:
+
 1. "mixed": this means list will store values of ANY type. Slower and more memory-hungry by orders of magnitude compared to below. Rarely if ever needed in real-life experience.
 2. "int"/"integer": this means list is optimized to only hold values of C long type. Extremely fast and with lowest memory consumption.
 3. "double"/"float": this means list is optimized to only hold values of C double type. Extremely fast and with lowest memory consumption.
 4. "string": this means list is optimized to only hold values of C char* type. Very fast and with low memory consumption.
 5. your-class/interface-name: this means list will only hold objects of your desired class/interface. Slightly slower than 1# because it type-validates every entry with instanceof and just as memory-hungry (both holding values of C <a href="http://php.net/manual/en/internals2.variables.intro.php">zval*</a> type).
+
 Of course, all slowness and memory-hungriness mentioned above are relative. When compared to standard PHP array, any list, regardless of implementation or value type, is MUCH more optimal (as benchmarks below show).
+
 
 
 Example: 
