@@ -133,5 +133,5 @@ $list->add(true);	// ok: boolean will be converted to string
 $list->add(MyObject $object);	// exception thrown: there is no implicit conversion of object to string 
 
 Benchmarks:
-<img src="https://googledrive.com/host/0B7Rqx2g13dJWZGRNSTh4Y0lVSHc/speed.png"/>
-<img src="https://googledrive.com/host/0B7Rqx2g13dJWZGRNSTh4Y0lVSHc/speed.png"/>
+<img src="https://s31.postimg.org/thkvdwe3v/image.png"/>
+<img src="https://s31.postimg.org/3kr71aagb/image_1.png"/>
