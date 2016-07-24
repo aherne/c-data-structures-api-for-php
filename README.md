@@ -125,6 +125,7 @@ Because PHP so far doesn't support <a href="https://en.wikipedia.org/wiki/Generi
 Of course, all slowness and memory-hungriness mentioned above are relative. When compared to standard PHP array, any list, regardless of implementation or value type, is MUCH more optimal (see benchmarks section).
 
 Example: 
+
 $list = new ArrayList("string"); // if php would supported generics, it would have been ArrayList<string>
 $list->add("asd");	// ok
 $list->add(123);	// ok: integer will be internally converted to string
