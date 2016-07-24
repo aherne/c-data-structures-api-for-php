@@ -8,7 +8,7 @@ So far PHP only supports hash table (aka "array") as native data structure. This
 
 Development will be done in steps. Each step is complete only after thorough unit-testing. The list of steps are:
 
-1. Implementation of Lists. <font color="red"><strong>COMPLETE!!!</strong></font>
+1. Implementation of Lists. <strong>COMPLETE!!!</strong>
 2. Implementation of Maps
 3. Implementation of Sets
 4. Implementation of Stacks & Queues
@@ -106,6 +106,10 @@ All three classes implement <strong>Lists</strong> interface, which defines foll
 			<td>clear ()</td>
 			<td>Empties list.</td>
 		</tr>
+		<tr>
+			<td>toValue ()</td>
+			<td>Gets list converted to PHP standard array.</td>
+		</tr>
 	</tbody>
 </table>
 where TYPE can be any valid <a href="http://php.net/manual/ro/language.types.php">PHP type</a>.
@@ -118,9 +122,16 @@ Because PHP so far doesn't support <a href="https://en.wikipedia.org/wiki/Generi
 4. "string": this means list is optimized to only hold values of C char* type. Very fast and with low memory consumption.
 5. your-class/interface-name: this means list will only hold objects of your desired class/interface. Slightly slower than 1# because it type-validates every entry with instanceof and just as memory-hungry (both holding values of C <a href="http://php.net/manual/en/internals2.variables.intro.php">zval*</a> type).
 
-Of course, all slowness and memory-hungriness mentioned above are relative. When compared to standard PHP array, any list, regardless of implementation or value type, is MUCH more optimal (as benchmarks below show).
-
-
+Of course, all slowness and memory-hungriness mentioned above are relative. When compared to standard PHP array, any list, regardless of implementation or value type, is MUCH more optimal (see benchmarks section).
 
 Example: 
 $list = new ArrayList("string"); // if php would supported generics, it would have been ArrayList<string>
+$list->add("asd");	// ok
+$list->add(123);	// ok: integer will be internally converted to string
+$list->add(12.3);	// ok: double will be converted to string
+$list->add(true);	// ok: boolean will be converted to string
+$list->add(MyObject $object);	// exception thrown: there is no implicit conversion of object to string 
+
+Benchmarks:
+<img src="https://drive.google.com/open?id=0B7Rqx2g13dJWYlFWbWl6QzljLVE"/>
+<img src="https://drive.google.com/open?id=0B7Rqx2g13dJWTnBQc2xJOGNwV0k"/>
