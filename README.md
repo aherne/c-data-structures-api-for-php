@@ -122,17 +122,8 @@ Because PHP so far doesn't support <a href="https://en.wikipedia.org/wiki/Generi
 4. "string": this means list is optimized to only hold values of C char* type. Very fast and with low memory consumption.
 5. your-class/interface-name: this means list will only hold objects of your desired class/interface. Slightly slower than 1# because it type-validates every entry with instanceof and just as memory-hungry (both holding values of C <a href="http://php.net/manual/en/internals2.variables.intro.php">zval*</a> type).
 
-Of course, all slowness and memory-hungriness mentioned above are relative. When compared to standard PHP array, any list, regardless of implementation or value type, is MUCH more optimal (see benchmarks section).
-
-Example: 
-
-$list = new ArrayList("string"); // if php would supported generics, it would have been ArrayList<string>
-$list->add("asd");	// ok
-$list->add(123);	// ok: integer will be internally converted to string
-$list->add(12.3);	// ok: double will be converted to string
-$list->add(true);	// ok: boolean will be converted to string
-$list->add(MyObject $object);	// exception thrown: there is no implicit conversion of object to string 
-
-Benchmarks:<br/>
+Of course, all slowness and memory-hungriness mentioned above are relative. When compared to standard PHP array, any list, regardless of implementation or value type, is MUCH more optimal. Benchmarks:<br/>
 <img src="https://s31.postimg.org/thkvdwe3v/image.png"/>
 <img src="https://s31.postimg.org/3kr71aagb/image_1.png"/>
+
+These benchmarks show how

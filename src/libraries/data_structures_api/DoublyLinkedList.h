@@ -10,6 +10,7 @@
 
 #include "../Comparator.h"
 #include "List.h"
+#include <iostream>
 
 template<typename T>
 struct DoublyLinkedListEntry {
@@ -199,7 +200,7 @@ class DoublyLinkedList: public List<T> {
 		}
 	private:
 		void traverse(const std::size_t& index) const {
-			if(index==currentIndex) return;
+			if(index==currentIndex && currentItem!=nullptr) return;
 
 			bool forwardTraversal = true;
 			if(currentItem==nullptr) {
@@ -491,7 +492,7 @@ class DoublyLinkedList<zval*>: public List<zval*> {
 		iterator end();
 	private:
 		void traverse(const std::size_t& index) const {
-			if(index==currentIndex) return;
+			if(index==currentIndex && currentItem!=nullptr) return;
 
 			bool forwardTraversal = true;
 			if(currentItem==nullptr) {

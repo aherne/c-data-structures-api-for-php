@@ -15,7 +15,7 @@ extern "C" {
 	#include "/usr/include/php5/Zend/zend_interfaces.h"
 }
 
-extern zend_module_entry data_types_api_module_entry;
+extern  data_types_api_module_entry;
 #define phpext_data_types_api_ptr &data_types_api_module_entry;
 
 #endif /* PHP_DATA_TYPES_API_H */
